@@ -1,36 +1,30 @@
-import 'package:alwan_chat_app/app/app.bottomsheets.dart';
-import 'package:alwan_chat_app/app/app.dialogs.dart';
-import 'package:alwan_chat_app/app/app.locator.dart';
-import 'package:alwan_chat_app/ui/common/app_strings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
-  final _dialogService = locator<DialogService>();
-  final _bottomSheetService = locator<BottomSheetService>();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  String get counterLabel => 'Counter is: $_counter';
+  List<Map<String, dynamic>> chats = [];
 
-  int _counter = 0;
-
-  void incrementCounter() {
-    _counter++;
-    rebuildUi();
-  }
-
-  void showDialog() {
-    _dialogService.showCustomDialog(
-      variant: DialogType.infoAlert,
-      title: 'Stacked Rocks!',
-      description: 'Give stacked $_counter stars on Github',
-    );
-  }
-
-  void showBottomSheet() {
-    _bottomSheetService.showCustomSheet(
-      variant: BottomSheetType.notice,
-      title: ksHomeBottomSheetTitle,
-      description: ksHomeBottomSheetDescription,
-    );
+  // Fetch chat data from Firestore
+  Future<void> fetchChats() async {
+    setBusy(true); // Show a loading state
+    try {
+      print('Fetching chats...');
+      final QuerySnapshot snapshot = await _firestore.collection('users').get();
+      print('Documents fetched: ${snapshot.docs.length}');
+      chats = snapshot.docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .toList();
+      print('Chats: $chats');
+      rebuildUi(); // Notify the UI to rebuild
+    } catch (e) {
+      print('Error fetching chats: $e');
+      if (e is FirebaseException) {
+        print('Error code: ${e.code}, Message: ${e.message}');
+      }
+    } finally {
+      setBusy(false); // Stop loading state
+    }
   }
 }

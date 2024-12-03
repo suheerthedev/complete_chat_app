@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:alwan_chat_app/ui/common/app_colors.dart';
-import 'package:alwan_chat_app/ui/common/ui_helpers.dart';
-
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
@@ -15,71 +13,61 @@ class HomeView extends StackedView<HomeViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                verticalSpaceLarge,
-                Column(
-                  children: [
-                    const Text(
-                      'Hello, STACKED!',
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    verticalSpaceMedium,
-                    MaterialButton(
-                      color: Colors.black,
-                      onPressed: viewModel.incrementCounter,
-                      child: Text(
-                        viewModel.counterLabel,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showDialog,
-                      child: const Text(
-                        'Show Dialog',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showBottomSheet,
-                      child: const Text(
-                        'Show Bottom Sheet',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'WhatsUpp',
+          style: TextStyle(
+              fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
         ),
+        backgroundColor: Colors.green,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => viewModel.fetchChats(), // Refresh chats
+          ),
+        ],
+      ),
+      body: viewModel.isBusy
+          ? const Center(child: CircularProgressIndicator()) // Show loader
+          : viewModel.chats.isEmpty
+              ? const Center(child: Text('No chats available.'))
+              : ListView.builder(
+                  itemCount: viewModel.chats.length,
+                  itemBuilder: (context, index) {
+                    final chat = viewModel.chats[index];
+                    return _chatItem(
+                      chat['sender'] ?? 'Unknown',
+                      chat['message'] ?? '',
+                      chat['time'] ?? '',
+                    );
+                  },
+                ),
+    );
+  }
+
+  Widget _chatItem(String name, String message, String time) {
+    return ListTile(
+      leading: const CircleAvatar(child: Icon(FontAwesomeIcons.user)),
+      title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+      subtitle: Text(message, maxLines: 1, overflow: TextOverflow.ellipsis),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(time,
+              style: const TextStyle(fontSize: 12.0, color: Colors.grey)),
+        ],
       ),
     );
   }
 
   @override
-  HomeViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      HomeViewModel();
+  HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();
+
+  @override
+  void onViewModelReady(HomeViewModel viewModel) {
+    super.onViewModelReady(viewModel);
+    viewModel.fetchChats(); // Fetch chats when view is ready
+  }
 }
