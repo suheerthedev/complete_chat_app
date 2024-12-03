@@ -14,6 +14,7 @@ dependencies:
     sdk: flutter
   flutter_otp_text_field: ^1.2.0
   font_awesome_flutter: ^10.8.0
+  image_picker: ^1.1.2
   stacked: ^3.4.0
   stacked_services: ^1.1.0
 
