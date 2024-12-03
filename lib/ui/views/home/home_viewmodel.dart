@@ -11,7 +11,7 @@ class HomeViewModel extends BaseViewModel {
     setBusy(true); // Show a loading state
     try {
       print('Fetching chats...');
-      final QuerySnapshot snapshot = await _firestore.collection('users').get();
+      final QuerySnapshot snapshot = await _firestore.collection('dummyChats').get();
       print('Documents fetched: ${snapshot.docs.length}');
       chats = snapshot.docs
           .map((doc) => doc.data() as Map<String, dynamic>)
