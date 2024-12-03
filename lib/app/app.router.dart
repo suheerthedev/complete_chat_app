@@ -8,11 +8,13 @@
 import 'package:alwan_chat_app/ui/views/home/home_view.dart' as _i2;
 import 'package:alwan_chat_app/ui/views/otp_verification/otp_verification_view.dart'
     as _i4;
+import 'package:alwan_chat_app/ui/views/phone_registration/phone_registration_view.dart'
+    as _i5;
 import 'package:alwan_chat_app/ui/views/startup/startup_view.dart' as _i3;
-import 'package:flutter/material.dart' as _i5;
+import 'package:flutter/material.dart' as _i6;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i6;
+import 'package:stacked_services/stacked_services.dart' as _i7;
 
 class Routes {
   static const homeView = '/home-view';
@@ -21,10 +23,13 @@ class Routes {
 
   static const otpVerificationView = '/otp-verification-view';
 
+  static const phoneRegistrationView = '/phone-registration-view';
+
   static const all = <String>{
     homeView,
     startupView,
     otpVerificationView,
+    phoneRegistrationView,
   };
 }
 
@@ -42,24 +47,34 @@ class StackedRouter extends _i1.RouterBase {
       Routes.otpVerificationView,
       page: _i4.OtpVerificationView,
     ),
+    _i1.RouteDef(
+      Routes.phoneRegistrationView,
+      page: _i5.PhoneRegistrationView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
+      return _i6.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
+      return _i6.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.OtpVerificationView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
+      return _i6.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.OtpVerificationView(),
+        settings: data,
+      );
+    },
+    _i5.PhoneRegistrationView: (data) {
+      return _i6.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i5.PhoneRegistrationView(),
         settings: data,
       );
     },
@@ -72,7 +87,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i6.NavigationService {
+extension NavigatorStateExtension on _i7.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -115,6 +130,20 @@ extension NavigatorStateExtension on _i6.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToPhoneRegistrationView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.phoneRegistrationView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -151,6 +180,20 @@ extension NavigatorStateExtension on _i6.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.otpVerificationView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithPhoneRegistrationView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.phoneRegistrationView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
