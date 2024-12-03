@@ -7,6 +7,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:alwan_chat_app/ui/views/otp_verification/otp_verification_view.dart';
 import 'package:alwan_chat_app/ui/views/phone_registration/phone_registration_view.dart';
 import 'package:alwan_chat_app/ui/views/user_info/user_info_view.dart';
+import 'package:alwan_chat_app/services/phone_auth_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -22,7 +23,8 @@ import 'package:alwan_chat_app/ui/views/user_info/user_info_view.dart';
     LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: DialogService),
     LazySingleton(classType: NavigationService),
-    // @stacked-service
+    LazySingleton(classType: PhoneAuthService),
+// @stacked-service
   ],
   bottomsheets: [
     StackedBottomsheet(classType: NoticeSheet),
