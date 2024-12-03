@@ -6,6 +6,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:alwan_chat_app/ui/views/otp_verification/otp_verification_view.dart';
 import 'package:alwan_chat_app/ui/views/phone_registration/phone_registration_view.dart';
+import 'package:alwan_chat_app/ui/views/user_info/user_info_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -14,6 +15,7 @@ import 'package:alwan_chat_app/ui/views/phone_registration/phone_registration_vi
     MaterialRoute(page: StartupView),
     MaterialRoute(page: OtpVerificationView),
     MaterialRoute(page: PhoneRegistrationView),
+    MaterialRoute(page: UserInfoView),
 // @stacked-route
   ],
   dependencies: [
