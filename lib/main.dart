@@ -1,3 +1,5 @@
+import 'package:alwan_chat_app/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:alwan_chat_app/app/app.bottomsheets.dart';
 import 'package:alwan_chat_app/app/app.dialogs.dart';
@@ -7,6 +9,8 @@ import 'package:stacked_services/stacked_services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // FirebaseAuth.instance.setSettings(appVerificationDisabledForTesting: true);
   await setupLocator();
   setupDialogUi();
   setupBottomSheetUi();
@@ -19,6 +23,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Montserrat'),
+      debugShowCheckedModeBanner: false,
       initialRoute: Routes.startupView,
       onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorKey: StackedService.navigatorKey,
@@ -28,3 +34,4 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+
