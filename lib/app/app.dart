@@ -4,13 +4,15 @@ import 'package:alwan_chat_app/ui/views/home/home_view.dart';
 import 'package:alwan_chat_app/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:alwan_chat_app/ui/views/otp_verification/otp_verification_view.dart';
 // @stacked-import
 
 @StackedApp(
   routes: [
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView),
-    // @stacked-route
+    MaterialRoute(page: OtpVerificationView),
+// @stacked-route
   ],
   dependencies: [
     LazySingleton(classType: BottomSheetService),
