@@ -5,7 +5,8 @@ class UserInputDialog extends StatelessWidget {
   final DialogRequest request;
   final Function(DialogResponse) completer;
 
-  const UserInputDialog({Key? key, required this.request, required this.completer})
+  const UserInputDialog(
+      {Key? key, required this.request, required this.completer})
       : super(key: key);
 
   @override
@@ -41,7 +42,7 @@ class UserInputDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             const SizedBox(height: 16),
-            
+
             // Input Fields Section
             Column(
               children: inputFields.map((field) {
@@ -66,14 +67,16 @@ class UserInputDialog extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: () => completer(DialogResponse(confirmed: false)),
+                      onPressed: () =>
+                          completer(DialogResponse(confirmed: false)),
                       child: Text(
                         request.secondaryButtonTitle!,
                         style: const TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
-                if (request.secondaryButtonTitle != null) const SizedBox(width: 10),
+                if (request.secondaryButtonTitle != null)
+                  const SizedBox(width: 10),
                 if (request.mainButtonTitle != null)
                   Expanded(
                     child: ElevatedButton(

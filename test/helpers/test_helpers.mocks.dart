@@ -25,6 +25,17 @@ import 'package:stacked_services/stacked_services.dart' as _i2;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeNavigationService_0 extends _i1.SmartFake
+    implements _i2.NavigationService {
+  _FakeNavigationService_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [NavigationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -687,4 +698,37 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
 /// A class which mocks [PhoneAuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPhoneAuthService extends _i1.Mock implements _i7.PhoneAuthService {}
+class MockPhoneAuthService extends _i1.Mock implements _i7.PhoneAuthService {
+  @override
+  _i2.NavigationService get navigationService => (super.noSuchMethod(
+        Invocation.getter(#navigationService),
+        returnValue: _FakeNavigationService_0(
+          this,
+          Invocation.getter(#navigationService),
+        ),
+        returnValueForMissingStub: _FakeNavigationService_0(
+          this,
+          Invocation.getter(#navigationService),
+        ),
+      ) as _i2.NavigationService);
+
+  @override
+  _i5.Future<void> sendOtp(String? phoneNumber) => (super.noSuchMethod(
+        Invocation.method(
+          #sendOtp,
+          [phoneNumber],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> verifyOtp(String? smsCode) => (super.noSuchMethod(
+        Invocation.method(
+          #verifyOtp,
+          [smsCode],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+}

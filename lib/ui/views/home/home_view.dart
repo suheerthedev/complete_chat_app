@@ -55,8 +55,12 @@ class HomeView extends StackedView<HomeViewModel> {
 
   Widget _chatItem(String name, String message, String time) {
     return ListTile(
-      
-      leading: const CircleAvatar(backgroundColor: Colors.green,child: Icon(FontAwesomeIcons.user,color: Colors.black,)),
+      leading: CircleAvatar(
+          backgroundColor: Colors.green,
+          child: Icon(
+            FontAwesomeIcons.user,
+            color: Colors.grey[300],
+          )),
       title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(message, maxLines: 1, overflow: TextOverflow.ellipsis),
       trailing: Column(
