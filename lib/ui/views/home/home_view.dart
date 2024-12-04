@@ -25,12 +25,12 @@ class HomeView extends StackedView<HomeViewModel> {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () => viewModel.fetchChats(), // Refresh chats
+            onPressed: () => viewModel.fetchChats(),
           ),
         ],
       ),
       body: viewModel.isBusy
-          ? const Center(child: CircularProgressIndicator()) // Show loader
+          ? const Center(child: CircularProgressIndicator())
           : viewModel.chats.isEmpty
               ? const Center(child: Text('No chats available.'))
               : ListView.builder(
@@ -38,18 +38,25 @@ class HomeView extends StackedView<HomeViewModel> {
                   itemBuilder: (context, index) {
                     final chat = viewModel.chats[index];
                     return _chatItem(
-                      chat['sender'] ?? 'Unknown',
-                      chat['message'] ?? '',
-                      chat['time'] ?? '',
+                      chat['name'] ?? 'Unknown',
+                      chat['phone'] ?? '',
+                      chat['lastMessageTime'] ?? '',
                     );
                   },
                 ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            viewModel.addUser();
+            viewModel.rebuildUi();
+          },
+          child: const Icon(Icons.add)),
     );
   }
 
   Widget _chatItem(String name, String message, String time) {
     return ListTile(
-      leading: const CircleAvatar(child: Icon(FontAwesomeIcons.user)),
+      
+      leading: const CircleAvatar(backgroundColor: Colors.green,child: Icon(FontAwesomeIcons.user,color: Colors.black,)),
       title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(message, maxLines: 1, overflow: TextOverflow.ellipsis),
       trailing: Column(
@@ -68,6 +75,6 @@ class HomeView extends StackedView<HomeViewModel> {
   @override
   void onViewModelReady(HomeViewModel viewModel) {
     super.onViewModelReady(viewModel);
-    viewModel.fetchChats(); // Fetch chats when view is ready
+    viewModel.fetchChats();
   }
 }
