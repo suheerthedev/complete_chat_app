@@ -24,7 +24,7 @@ class HomeView extends StackedView<HomeViewModel> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh,color: Colors.black,),
             onPressed: () => viewModel.fetchChats(),
           ),
         ],
@@ -45,30 +45,32 @@ class HomeView extends StackedView<HomeViewModel> {
                   },
                 ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
           onPressed: () {
             viewModel.addUser();
             viewModel.rebuildUi();
           },
-          child: const Icon(Icons.add)),
+          child: const Icon(Icons.add,color: Colors.white,)),
     );
   }
 
   Widget _chatItem(String name, String message, String time) {
-    return ListTile(
-      leading: CircleAvatar(
-          backgroundColor: Colors.green,
-          child: Icon(
-            FontAwesomeIcons.user,
-            color: Colors.grey[300],
-          )),
-      title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text(message, maxLines: 1, overflow: TextOverflow.ellipsis),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(time,
-              style: const TextStyle(fontSize: 12.0, color: Colors.grey)),
-        ],
+    return GestureDetector(
+      onTap: (){
+        //Navigate to chat screen
+      },
+      child: ListTile(
+        
+        leading:  CircleAvatar(backgroundColor: Colors.green,child: Icon(FontAwesomeIcons.user,color: Colors.white,)),
+        title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(message, maxLines: 1, overflow: TextOverflow.ellipsis),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(time,
+                style: const TextStyle(fontSize: 12.0, color: Colors.grey)),
+          ],
+        ),
       ),
     );
   }
