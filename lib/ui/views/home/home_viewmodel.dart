@@ -1,30 +1,29 @@
+import 'package:alwan_chat_app/app/app.locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final DialogService  _dialogService = locator<DialogService>();
 
   List<Map<String, dynamic>> chats = [];
 
-  // Fetch chat data from Firestore
   Future<void> fetchChats() async {
-    setBusy(true); // Show a loading state
+    setBusy(true); 
     try {
-      print('Fetching chats...');
       final QuerySnapshot snapshot = await _firestore.collection('dummyChats').get();
-      print('Documents fetched: ${snapshot.docs.length}');
       chats = snapshot.docs
           .map((doc) => doc.data() as Map<String, dynamic>)
           .toList();
-      print('Chats: $chats');
-      rebuildUi(); // Notify the UI to rebuild
+      rebuildUi(); 
     } catch (e) {
-      print('Error fetching chats: $e');
+      _dialogService.showDialog(title: 'Error fetching chats: $e');
       if (e is FirebaseException) {
-        print('Error code: ${e.code}, Message: ${e.message}');
+        _dialogService.showDialog(title:  'Error code: ${e.code}' , description: 'Message: ${e.message}');
       }
     } finally {
-      setBusy(false); // Stop loading state
+      setBusy(false); 
     }
   }
 }
