@@ -12,23 +12,56 @@ class ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
-      viewModelBuilder: () => ChatViewModel(),
+    return ViewModelBuilder<ChatViewModel>.reactive(
+      viewModelBuilder: () => ChatViewModel(chatId: chatId),
       builder: (context, viewModel, child) {
         return Scaffold(
           appBar: AppBar(
             title: Text(
               userName,
               style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             backgroundColor: Colors.green,
             elevation: 0,
           ),
-          body: Center(
-            child: Text('Chat with $userName (Chat ID: $chatId)'),
+          body: Column(
+            children: [
+              Expanded(
+                child: viewModel.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        controller: viewModel.scrollCont,
+                        itemCount: viewModel.messages.length,
+                        reverse: false,
+                        itemBuilder: (context, index) { 
+                          final message = viewModel.messages[index];
+                          return Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 8),
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.green.shade100,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: message['imageUrl'] != ''
+                                  ? Image.network(message['imageUrl'])
+                                  : Text(
+                                      message['text'],
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                            ),
+                          );
+                        },
+                      ),
+              ),
+              
+            ],
           ),
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(top: 10),
@@ -40,12 +73,13 @@ class ChatView extends StatelessWidget {
                     child: TextField(
                       controller: viewModel.messageCont,
                       decoration: InputDecoration(
+                        hintText: 'Type a message',
                         suffixIcon: IconButton(
-                            onPressed: () {},
+                            onPressed: () => viewModel.pickImage(),
                             icon: const Icon(
                               Icons.camera_alt_outlined,
                               color: Colors.black,
-                              size: 30,
+                              size: 27,
                             )),
                         fillColor: Colors.white10,
                         filled: true,
@@ -58,7 +92,7 @@ class ChatView extends StatelessWidget {
                     )),
                 horizontalSpaceSmall,
                 FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () => viewModel.sendMessage(),
                   backgroundColor: Colors.black,
                   child: const Icon(
                     Icons.send,
