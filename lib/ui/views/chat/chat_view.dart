@@ -40,6 +40,13 @@ class ChatView extends StatelessWidget {
                     child: TextField(
                       controller: viewModel.messageCont,
                       decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.camera_alt_outlined,
+                              color: Colors.black,
+                              size: 30,
+                            )),
                         fillColor: Colors.white10,
                         filled: true,
                         border: OutlineInputBorder(
@@ -49,10 +56,9 @@ class ChatView extends StatelessWidget {
                             borderSide: const BorderSide(color: Colors.black)),
                       ),
                     )),
-                    horizontalSpaceSmall,
+                horizontalSpaceSmall,
                 FloatingActionButton(
-                  
-                  onPressed: (){},
+                  onPressed: () {},
                   backgroundColor: Colors.black,
                   child: const Icon(
                     Icons.send,
