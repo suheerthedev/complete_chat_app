@@ -10,6 +10,7 @@ import 'package:alwan_chat_app/ui/views/user_info/user_info_view.dart';
 import 'package:alwan_chat_app/services/phone_auth_service.dart';
 import 'package:alwan_chat_app/ui/views/chat/chat_view.dart';
 import 'package:alwan_chat_app/ui/dialogs/user_input/user_input_dialog.dart';
+import 'package:alwan_chat_app/ui/views/sharing/sharing_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -20,6 +21,7 @@ import 'package:alwan_chat_app/ui/dialogs/user_input/user_input_dialog.dart';
     MaterialRoute(page: PhoneRegistrationView),
     MaterialRoute(page: UserInfoView),
     MaterialRoute(page: ChatView),
+    MaterialRoute(page: SharingView),
 // @stacked-route
   ],
   dependencies: [
