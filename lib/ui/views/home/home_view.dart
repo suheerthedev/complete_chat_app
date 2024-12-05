@@ -14,7 +14,7 @@ class HomeView extends StackedView<HomeViewModel> {
   ) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         title: const Text(
           'WhatsUpp',
           style: TextStyle(
@@ -24,7 +24,10 @@ class HomeView extends StackedView<HomeViewModel> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh,color: Colors.black,),
+            icon: const Icon(
+              Icons.refresh,
+              color: Colors.black,
+            ),
             onPressed: () => viewModel.fetchChats(),
           ),
         ],
@@ -45,23 +48,30 @@ class HomeView extends StackedView<HomeViewModel> {
                   },
                 ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
+          backgroundColor: Colors.black,
           onPressed: () {
             viewModel.addUser();
             viewModel.rebuildUi();
           },
-          child: const Icon(Icons.add,color: Colors.white,)),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          )),
     );
   }
 
   Widget _chatItem(String name, String message, String time) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         //Navigate to chat screen
       },
       child: ListTile(
-        
-        leading:  CircleAvatar(backgroundColor: Colors.green,child: Icon(FontAwesomeIcons.user,color: Colors.white,)),
+        leading: const CircleAvatar(
+            backgroundColor: Colors.green,
+            child: Icon(
+              FontAwesomeIcons.user,
+              color: Colors.white,
+            )),
         title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(message, maxLines: 1, overflow: TextOverflow.ellipsis),
         trailing: Column(

@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 
-import 'chat_viewmodel.dart';
+class ChatView extends StatelessWidget {
+  final String chatId;
+  final String userName;
 
-class ChatView extends StackedView<ChatViewModel> {
-  const ChatView({Key? key}) : super(key: key);
+  const ChatView({Key? key, required this.chatId, required this.userName})
+      : super(key: key);
 
   @override
-  Widget builder(
-    BuildContext context,
-    ChatViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Container(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+      appBar: AppBar(
+        title: Text(userName),
+        backgroundColor: Colors.green,
+      ),
+      body: Center(
+        child: Text('Chat with $userName (Chat ID: $chatId)'),
       ),
     );
   }
-
-  @override
-  ChatViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      ChatViewModel();
 }

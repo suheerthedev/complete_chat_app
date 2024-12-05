@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:alwan_chat_app/ui/common/ui_helpers.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class UserInputDialog extends StatelessWidget {
+import 'user_input_dialog_model.dart';
+
+class UserInputDialog extends StackedView<UserInputDialogModel> {
   final DialogRequest request;
   final Function(DialogResponse) completer;
 
-  const UserInputDialog(
-      {Key? key, required this.request, required this.completer})
-      : super(key: key);
+  const UserInputDialog({
+    Key? key,
+    required this.request,
+    required this.completer,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget builder(
+    BuildContext context,
+    UserInputDialogModel viewModel,
+    Widget? child,
+  ) {
     final List<Widget> inputFields = request.data as List<Widget>? ?? [];
-
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       backgroundColor: Colors.white,
@@ -31,7 +40,7 @@ class UserInputDialog extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-            const SizedBox(height: 8),
+            verticalSpaceSmall,
             if (request.description != null)
               Text(
                 request.description!,
@@ -41,7 +50,7 @@ class UserInputDialog extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-            const SizedBox(height: 16),
+            verticalSpaceSmall,
 
             // Input Fields Section
             Column(
@@ -53,7 +62,7 @@ class UserInputDialog extends StatelessWidget {
               }).toList(),
             ),
 
-            const SizedBox(height: 16),
+            verticalSpaceSmall,
 
             // Action Buttons Section
             Row(
@@ -106,4 +115,8 @@ class UserInputDialog extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  UserInputDialogModel viewModelBuilder(BuildContext context) =>
+      UserInputDialogModel();
 }

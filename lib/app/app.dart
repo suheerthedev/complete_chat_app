@@ -9,6 +9,7 @@ import 'package:alwan_chat_app/ui/views/phone_registration/phone_registration_vi
 import 'package:alwan_chat_app/ui/views/user_info/user_info_view.dart';
 import 'package:alwan_chat_app/services/phone_auth_service.dart';
 import 'package:alwan_chat_app/ui/views/chat/chat_view.dart';
+import 'package:alwan_chat_app/ui/dialogs/user_input/user_input_dialog.dart';
 // @stacked-import
 
 @StackedApp(
@@ -34,7 +35,8 @@ import 'package:alwan_chat_app/ui/views/chat/chat_view.dart';
   ],
   dialogs: [
     StackedDialog(classType: InfoAlertDialog),
-    // @stacked-dialog
+    StackedDialog(classType: UserInputDialog),
+// @stacked-dialog
   ],
 )
 class App {}
