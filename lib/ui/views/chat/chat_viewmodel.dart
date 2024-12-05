@@ -28,7 +28,7 @@ class ChatViewModel extends BaseViewModel {
         .collection('chats')
         .doc(chatId)
         .collection('messages')
-        .orderBy('timestamp', descending: false) // Change to ascending order
+        .orderBy('timestamp', descending: false) 
         .snapshots()
         .listen((snapshot) {
       messages = snapshot.docs
@@ -49,7 +49,7 @@ class ChatViewModel extends BaseViewModel {
     final message = {
       'text': messageCont.text.trim(),
       'imageUrl': '',
-      'senderId': "yourUserId", // Replace with your user ID
+      'senderId': chatId, 
       'timestamp': FieldValue.serverTimestamp(),
     };
 
@@ -61,7 +61,6 @@ class ChatViewModel extends BaseViewModel {
 
     messageCont.clear();
 
-    // Automatically scroll to the bottom of the list
     scrollCont.animateTo(
       scrollCont.position.maxScrollExtent,
       duration: const Duration(milliseconds: 300),

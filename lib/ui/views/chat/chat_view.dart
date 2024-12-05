@@ -60,6 +60,7 @@ class ChatView extends StatelessWidget {
                         },
                       ),
               ),
+              const SizedBox(height: 80),
               
             ],
           ),
@@ -69,7 +70,7 @@ class ChatView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SizedBox(
-                    width: 300,
+                    width: 270,
                     child: TextField(
                       controller: viewModel.messageCont,
                       decoration: InputDecoration(

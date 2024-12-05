@@ -1,7 +1,9 @@
 import 'package:alwan_chat_app/app/app.locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_sharing_intent/flutter_sharing_intent.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+
 
 class SharingViewModel extends BaseViewModel {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -9,6 +11,25 @@ class SharingViewModel extends BaseViewModel {
 
   
   List<Map<String, dynamic>> chats = [];
+
+  void _initialSharing (){
+    FlutterSharingIntent.instance.getMediaStream().listen((sharedMedia){
+      if(sharedMedia.isNotEmpty && sharedMedia.first.value != null){
+        print("Shared Media: $sharedMedia");
+      }
+    });
+
+
+    FlutterSharingIntent.instance.getInitialSharing().then((sharedMedia){
+      if(sharedMedia.isNotEmpty && sharedMedia.first.value != null){
+      print("Shared Media: $sharedMedia");
+      }
+    });
+  }
+
+  void initializeSharingListener() {
+    _initialSharing();
+  }
 
   Future<void> fetchChats() async {
     setBusy(true);
