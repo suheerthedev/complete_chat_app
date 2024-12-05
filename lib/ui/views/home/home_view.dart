@@ -1,6 +1,9 @@
+import 'package:alwan_chat_app/app/app.locator.dart';
+import 'package:alwan_chat_app/app/app.router.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
@@ -44,6 +47,8 @@ class HomeView extends StackedView<HomeViewModel> {
                       chat['name'] ?? 'Unknown',
                       chat['phone'] ?? '',
                       chat['lastMessageTime'] ?? '',
+                      chat['chatId'],
+                      chat['name']
                     );
                   },
                 ),
@@ -59,11 +64,11 @@ class HomeView extends StackedView<HomeViewModel> {
           )),
     );
   }
-
-  Widget _chatItem(String name, String message, String time) {
+  Widget _chatItem(String name, String message, String time, String chatId, String userName) {
     return GestureDetector(
-      onTap: () {
-        //Navigate to chat screen
+      onTap: (){
+        NavigationService navigationService = locator<NavigationService>();
+        navigationService.navigateToChatView(chatId: chatId, userName: userName);
       },
       child: ListTile(
         leading: const CircleAvatar(
@@ -84,6 +89,7 @@ class HomeView extends StackedView<HomeViewModel> {
       ),
     );
   }
+
 
   @override
   HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();

@@ -1,5 +1,6 @@
 import 'package:alwan_chat_app/app/app.dialogs.dart';
 import 'package:alwan_chat_app/app/app.locator.dart';
+import 'package:alwan_chat_app/app/app.router.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -8,11 +9,16 @@ import 'package:stacked_services/stacked_services.dart';
 class HomeViewModel extends BaseViewModel {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final DialogService _dialogService = locator<DialogService>();
+  NavigationService navigationService = locator<NavigationService>();
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   TextEditingController nameCont = TextEditingController();
   TextEditingController userPhoneCont = TextEditingController();
 
   List<Map<String, dynamic>> chats = [];
+
+  Future<void> navigateToChatView(String chatId, String userName) async {
+    navigationService.navigateToChatView(chatId: chatId, userName: userName);
+  }
 
   Future<void> addUser() async {
     final response = await _dialogService.showCustomDialog(
