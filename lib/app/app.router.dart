@@ -135,7 +135,7 @@ class ChatViewArguments {
   const ChatViewArguments({
     this.key,
     required this.chatId,
-    required this.userName,
+    required this.userName, List<String>? sharedMedia,
   });
 
   final _i9.Key? key;
@@ -238,6 +238,7 @@ extension NavigatorStateExtension on _i10.NavigationService {
     _i9.Key? key,
     required String chatId,
     required String userName,
+    List<String>? sharedMedia,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -246,7 +247,7 @@ extension NavigatorStateExtension on _i10.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.chatView,
         arguments:
-            ChatViewArguments(key: key, chatId: chatId, userName: userName),
+            ChatViewArguments(key: key, chatId: chatId, userName: userName, sharedMedia: sharedMedia),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
