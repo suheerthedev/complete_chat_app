@@ -49,19 +49,21 @@ class SharingView extends StackedView<SharingViewModel> {
                       chat['phone'] ?? '',
                       chat['lastMessageTime'] ?? '',
                       chat['chatId'],
-                      chat['name']
+                      chat['name'],
+                      viewModel.sharedMediaPaths,
                     );
                   },
                 ),
-      
     );
   }
 
-  Widget _chatItem(String name, String message, String time,String chatId, String userName) {
+  Widget _chatItem(String name, String message, String time, String chatId,
+      String userName, List<String> sharedMedia) {
     return GestureDetector(
       onTap: () {
         NavigationService navigationService = locator<NavigationService>();
-        navigationService.navigateToChatView(chatId: chatId, userName: userName);
+        navigationService.navigateToChatView(
+            chatId: chatId, userName: userName, sharedMedia: sharedMedia);
       },
       child: ListTile(
         leading: const CircleAvatar(
@@ -82,7 +84,6 @@ class SharingView extends StackedView<SharingViewModel> {
       ),
     );
   }
-  
 
   @override
   SharingViewModel viewModelBuilder(BuildContext context) => SharingViewModel();
@@ -93,5 +94,4 @@ class SharingView extends StackedView<SharingViewModel> {
     viewModel.initializeSharingListener();
     viewModel.fetchChats();
   }
-      
 }

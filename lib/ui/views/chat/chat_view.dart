@@ -6,14 +6,16 @@ import 'package:stacked/stacked.dart';
 class ChatView extends StatelessWidget {
   final String chatId;
   final String userName;
+  final List<String>? sharedMedia;
 
-  const ChatView({Key? key, required this.chatId, required this.userName})
+
+  const ChatView({Key? key, required this.chatId, required this.userName, this.sharedMedia})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ChatViewModel>.reactive(
-      viewModelBuilder: () => ChatViewModel(chatId: chatId),
+      viewModelBuilder: () => ChatViewModel(chatId: chatId, sharedMedia: sharedMedia),
       builder: (context, viewModel, child) {
         return Scaffold(
           appBar: AppBar(
@@ -93,7 +95,10 @@ class ChatView extends StatelessWidget {
                     )),
                 horizontalSpaceSmall,
                 FloatingActionButton(
-                  onPressed: () => viewModel.sendMessage(),
+                 
+                  onPressed: () {
+                  viewModel.sendMessage(viewModel.messageCont.text);
+                  },
                   backgroundColor: Colors.black,
                   child: const Icon(
                     Icons.send,

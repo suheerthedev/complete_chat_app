@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ChatViewModel extends BaseViewModel {
   final String chatId;
+  final List<String>? sharedMedia;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -16,8 +17,18 @@ class ChatViewModel extends BaseViewModel {
   List<Map<String, dynamic>> messages = [];
   bool isLoading = true;
 
-  ChatViewModel({required this.chatId}) {
+  ChatViewModel({required this.chatId, this.sharedMedia}) {
+    if (sharedMedia != null && sharedMedia!.isNotEmpty) {
+      sendSharedMedia();
+    }
     fetchMessages();
+  }
+
+  Future<void> sendSharedMedia() async {
+    for (var mediaPath in sharedMedia!) {
+      final imageUrl = await uploadImage(mediaPath);
+      await sendImageMessage(imageUrl);
+    }
   }
 
   Future<void> fetchMessages() async {
@@ -43,13 +54,13 @@ class ChatViewModel extends BaseViewModel {
     });
   }
 
-  Future<void> sendMessage() async {
+  Future<void> sendMessage(String imageUrl) async {
     if (messageCont.text.trim().isEmpty) return;
 
-    final message = {
-      'text': messageCont.text.trim(),
-      'imageUrl': '',
-      'senderId': chatId, 
+     final message = {
+      'text': '',
+      'imageUrl': imageUrl,
+      'senderId': chatId,
       'timestamp': FieldValue.serverTimestamp(),
     };
 
@@ -73,14 +84,15 @@ class ChatViewModel extends BaseViewModel {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      final imageUrl = await uploadImage(image);
+      final imageUrl = await uploadImage(image.path);
       await sendImageMessage(imageUrl);
     }
   }
 
-  Future<String> uploadImage(XFile image) async {
-    final ref = storage.ref().child('chatImages/${image.name}');
-    await ref.putFile(File(image.path));
+  Future<String> uploadImage(String mediaPath) async {
+    final ref = storage.ref().child('chatImages/${DateTime.now().millisecondsSinceEpoch}');
+    final file = File(mediaPath);
+    await ref.putFile(file);
     return await ref.getDownloadURL();
   }
 
