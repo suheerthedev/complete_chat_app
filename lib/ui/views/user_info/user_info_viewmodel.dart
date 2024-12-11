@@ -28,6 +28,6 @@ class UserInfoViewModel extends BaseViewModel {
   }
 
   void submitUserInfo() {
-    navigationService.replaceWithHomeView();
+    navigationService.clearStackAndShow(Routes.homeView);
   }
 }
