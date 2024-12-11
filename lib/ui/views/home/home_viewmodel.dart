@@ -62,6 +62,7 @@ class HomeViewModel extends BaseViewModel {
 
         nameCont.clear();
         userPhoneCont.clear();
+        fetchChats();
       } catch (error) {
         await _dialogService.showDialog(
           title: 'Error',

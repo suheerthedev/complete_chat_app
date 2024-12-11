@@ -91,6 +91,7 @@ class SharingView extends StackedView<SharingViewModel> {
   void onViewModelReady(SharingViewModel viewModel) {
     super.onViewModelReady(viewModel);
     viewModel.initializeSharingListener();
+    viewModel.fetchChats();
   }
       
 }

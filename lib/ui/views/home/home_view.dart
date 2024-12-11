@@ -56,7 +56,6 @@ class HomeView extends StackedView<HomeViewModel> {
           backgroundColor: Colors.black,
           onPressed: () {
             viewModel.addUser();
-            viewModel.rebuildUi();
           },
           child: const Icon(
             Icons.add,
